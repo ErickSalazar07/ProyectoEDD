@@ -1,12 +1,11 @@
 #ifndef COMANDOS_H
 #define COMANDOS_H
-#include<string>
 
 void interfaz();
 void helpCmd(const std::string&);
 void help();
-void inicializar(const std::string&);
-void iniciarInv(const std::string&);
+void inicializar(const std::string&,std::vector<std::vector<std::string>>&);
+void iniciarInv(const std::string&,std::vector<std::vector<std::string>>&);
 void puntaje(const std::string&);
 void iniciarArbol(const std::string&);
 void iniciarArbolInv(const std::string&);

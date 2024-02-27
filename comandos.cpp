@@ -9,8 +9,9 @@
 int banderas = 0;
 
 
-void interfaz(){ system("cls");
-    
+void interfaz(){
+    std::vector<std::vector<std::string>> palabras(26,std::vector<std::string>(0)); //matriz de palabras
+    std::vector<std::vector<std::string>> palabrasInv(26,std::vector<std::string>(0)); //matriz de palabras inversas
     std::string comando;
 
     do{
@@ -30,12 +31,12 @@ void interfaz(){ system("cls");
         }else if(comando.at(0) == 'i' && comando.find("inicializar") != std::string::npos){
 
             comando.erase(0,12);
-            inicializar(comando);
+            inicializar(comando,palabras);
 
         }else if(comando.at(0) == 'i' && comando.find("iniciar inverso") != std::string::npos){
             
             comando.erase(0,16);
-            iniciarInv(comando);
+            iniciarInv(comando,palabrasInv);
 
         }else if(comando.at(0) == 'p' && comando.find("puntaje") != std::string::npos){
 
@@ -73,7 +74,6 @@ void interfaz(){ system("cls");
             std::cout<<"\n\n\aEl comando: "<<comando<<" no fue reconocido\n\n";
         }
         
-        system("pause"); system("cls");
 
     }while(comando != "salir");
 }
@@ -181,14 +181,13 @@ void help(){
     <<"\t- help COMANDO    ->    (COMANDO, en minusculas)\n\n\n\n";
 }
 
-void inicializar(const std::string& archivo){
+void inicializar(const std::string& archivo,std::vector<std::vector<std::string>>& palabras){
     if(banderas & 1){ std::cout<<"\nYa se ha realizado la funcion \"inicializar\"\n\n"; return;}
 
     bool ban = 1;
     char c = 'E';
     std::string linea;
     std::ifstream diccionario(archivo);
-    std::vector<std::vector<std::string>> palabras(26,std::vector<std::string>(0)); //matriz de palabras
 
     if(!diccionario){ std::cerr<<"\aNo se encontro el archivo: "<<archivo<<std::endl; ban = 0; return;}
     
@@ -261,7 +260,7 @@ void inicializar(const std::string& archivo){
     std::cout<<"\nResultado "<<(ban?"Exitoso":"Fallido")<<"\n\n";
 }
 
-void iniciarInv(const std::string& archivo){
+void iniciarInv(const std::string& archivo,std::vector<std::vector<std::string>>& palabrasInv){
 
     if(banderas & 2){ std::cout<<"\nYa se ha realizado la funcion \"iniciar inverso\"\n\n"; return;}
 
@@ -269,7 +268,6 @@ void iniciarInv(const std::string& archivo){
     bool ban = 1;
     std::string linea;
     std::ifstream diccionario(archivo);
-    std::vector<std::vector<std::string>> palabrasInv(26,std::vector<std::string>(0)); //matriz de palabras inversas
 
     if(diccionario.fail()){ std::cerr<<"\aNo se encontro el archivo: "<<archivo<<std::endl; ban = 0; return; }
 
