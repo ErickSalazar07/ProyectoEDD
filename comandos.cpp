@@ -40,8 +40,9 @@ void interfaz(){
 
         }else if(comando.at(0) == 'p' && comando.find("puntaje") != std::string::npos){
 
-            comando.erase(0,8); 
-            puntaje(comando);
+            comando.erase(0,8);
+
+            puntaje(comando,palabras,palabrasInv);
 
         }else if(comando.at(0) == 'i' && comando.find("iniciar arbol inverso") != std::string::npos){
 
@@ -273,8 +274,10 @@ void iniciarInv(const std::string& archivo,std::vector<std::vector<std::string>>
 
     while(getline(diccionario,linea)){
 
+        //linea[0] = tolower(linea[0]); // cambia el caracter a minus
+
         std::reverse(linea.begin(),linea.end());
-        linea[linea.size()-1] = tolower(linea[linea.size()-1]); // cambia el ultimo caracter a minuscula
+        //linea[linea.size()-1] = tolower(linea[linea.size()-1]); // cambia el ultimo caracter a minuscula
 
         switch(toupper(linea[0])){
 
@@ -345,10 +348,15 @@ void iniciarInv(const std::string& archivo,std::vector<std::vector<std::string>>
     std::cout<<"\nResultado "<<(ban?"Exitoso":"Fallido")<<"\n\n";
 }
 
-void puntaje(const std::string& palabra){
+void puntaje(const std::string& palabra,const std::vector<std::vector<std::string>>& palabras,const std::vector<std::vector<std::string>>& palabrasInv){
     unsigned int puntaje = 0;
 
     if(!esPalabraValida(palabra)){ std::cout<<"\nLa palabra contiene caracteres no validos\n\nResultado Fallido\n"; return;}
+    
+    if(!encuentraPalDiccionario(palabra,palabras[toupper(palabra[0]) - 'A'],palabrasInv[toupper(palabra[0]) - 'A'])){ 
+        std::cout<<"\a\nNo se encontro la palabra en tanto el diccionario orden normal, como orden inverso\n";
+        return;
+    }
 
     for(int i=0; i<palabra.length(); i++)
         switch(toupper(palabra[i])){
@@ -467,4 +475,14 @@ bool esPalabraValida(const std::string& palabra){
     for(int i=0; i<palabra.size(); i++)
         if(!(palabra[i] >= 'A' && palabra[i] <= 'Z' || palabra[i] >= 'a' && palabra[i] <= 'z' || palabra[i] == ' ')) return false;  
     return true;
+}
+
+bool encuentraPalDiccionario(const std::string& palabra,const std::vector<std::string>& vecPalabra,const std::vector<std::string>& vecPalabraInv){
+    bool ban = 0;
+
+    for(std::string i:vecPalabra) if(i == palabra) ban = 1;
+
+    for(std::string i:vecPalabra) if(i == palabra && ban) return true;
+
+    return false;
 }
