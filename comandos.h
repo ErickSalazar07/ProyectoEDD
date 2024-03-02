@@ -16,6 +16,7 @@ void palabrasPorSufijo(const std::string&);
 void grafoPalabras();
 void posiblesPalabras(const std::string&);
 bool esPalabraValida(const std::string&);
-bool encuentraPalDiccionario(const std::string&,const std::vector<std::string>&,const std::vector<std::string>&);
+bool encuentraDiccionario(const std::string&,const std::vector<std::string>&);
+bool encuentraDiccionarioInv(const std::string&,const std::vector<std::string>&);
 
 #endif

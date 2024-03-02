@@ -18,7 +18,7 @@ void interfaz(){
         std::cout<<"$ ";
         getline(std::cin,comando);
 
-        
+        if(comando == "") continue;
         
         if(comando == "salir"){ 
             return;
@@ -41,7 +41,7 @@ void interfaz(){
         }else if(comando.at(0) == 'p' && comando.find("puntaje") != std::string::npos){
 
             comando.erase(0,8);
-
+            comando[0] = tolower(comando[0]);
             puntaje(comando,palabras,palabrasInv);
 
         }else if(comando.at(0) == 'i' && comando.find("iniciar arbol inverso") != std::string::npos){
@@ -186,72 +186,77 @@ void inicializar(const std::string& archivo,std::vector<std::vector<std::string>
     if(banderas & 1){ std::cout<<"\nYa se ha realizado la funcion \"inicializar\"\n\n"; return;}
 
     bool ban = 1;
-    char c = 'E';
     std::string linea;
     std::ifstream diccionario(archivo);
 
-    if(!diccionario){ std::cerr<<"\aNo se encontro el archivo: "<<archivo<<std::endl; ban = 0; return;}
+    if(!diccionario){ std::cerr<<"\aNo se encontro el archivo: "<<archivo<<std::endl; return;}
     
-    while(getline(diccionario,linea))
-    
-        switch(toupper(linea[0])){
-            case 'A': palabras[0].push_back(linea);
+    while(getline(diccionario,linea)){
+
+        if(!esPalabraValida(linea)) continue;
+        
+        linea[0] = tolower(linea[0]);
+
+        switch(linea[0]){
+            case 'a': palabras[0].push_back(linea);
                       break;
-            case 'B': palabras[1].push_back(linea);
+            case 'b': palabras[1].push_back(linea);
                       break;
-            case 'C': palabras[2].push_back(linea);
+            case 'c': palabras[2].push_back(linea);
                       break;
-            case 'D': palabras[3].push_back(linea);
+            case 'd': palabras[3].push_back(linea);
                       break;
-            case 'E': palabras[4].push_back(linea);
+            case 'e': palabras[4].push_back(linea);
                       break;
-            case 'F': palabras[5].push_back(linea);
+            case 'f': palabras[5].push_back(linea);
                       break;
-            case 'G': palabras[6].push_back(linea);
+            case 'g': palabras[6].push_back(linea);
                       break;
-            case 'H': palabras[7].push_back(linea);
+            case 'h': palabras[7].push_back(linea);
                       break;
-            case 'I': palabras[8].push_back(linea);
+            case 'i': palabras[8].push_back(linea);
                       break;
-            case 'J': palabras[9].push_back(linea);
+            case 'j': palabras[9].push_back(linea);
                       break;
-            case 'K': palabras[10].push_back(linea);
+            case 'k': palabras[10].push_back(linea);
                       break;
-            case 'L': palabras[11].push_back(linea);
+            case 'l': palabras[11].push_back(linea);
                       break;
-            case 'M': palabras[12].push_back(linea);
+            case 'm': palabras[12].push_back(linea);
                       break;
-            case 'N': palabras[13].push_back(linea);
+            case 'n': palabras[13].push_back(linea);
                       break;
-            case 'O': palabras[14].push_back(linea);
+            case 'o': palabras[14].push_back(linea);
                       break;
-            case 'P': palabras[15].push_back(linea);
+            case 'p': palabras[15].push_back(linea);
                       break;
-            case 'Q': palabras[16].push_back(linea);
+            case 'q': palabras[16].push_back(linea);
                       break;
-            case 'R': palabras[17].push_back(linea);
+            case 'r': palabras[17].push_back(linea);
                       break;
-            case 'S': palabras[18].push_back(linea);
+            case 's': palabras[18].push_back(linea);
                       break;
-            case 'T': palabras[19].push_back(linea);
+            case 't': palabras[19].push_back(linea);
                       break;
-            case 'U': palabras[20].push_back(linea);
+            case 'u': palabras[20].push_back(linea);
                       break;
-            case 'V': palabras[21].push_back(linea);
+            case 'v': palabras[21].push_back(linea);
                       break;
-            case 'W': palabras[22].push_back(linea);
+            case 'w': palabras[22].push_back(linea);
                       break;
-            case 'X': palabras[23].push_back(linea);
+            case 'x': palabras[23].push_back(linea);
                       break;
-            case 'Y': palabras[24].push_back(linea);
+            case 'y': palabras[24].push_back(linea);
                       break;
-            case 'Z': palabras[25].push_back(linea);
+            case 'z': palabras[25].push_back(linea);
                       break;
         }
     
+    }
     
-    for(std::vector<std::string> i:palabras)
-        for(std::string pal:i)
+    std::cout<<"\n\nPalabras que comienzan por c\n\n";
+
+        for(std::string pal:palabras['c'-'a'])
              std::cout<<pal<<std::endl;
         
     if(ban) banderas |= 1;
@@ -265,78 +270,81 @@ void iniciarInv(const std::string& archivo,std::vector<std::vector<std::string>>
 
     if(banderas & 2){ std::cout<<"\nYa se ha realizado la funcion \"iniciar inverso\"\n\n"; return;}
 
-    char c = 'F';
+    char c = 'f';
     bool ban = 1;
     std::string linea;
     std::ifstream diccionario(archivo);
 
-    if(diccionario.fail()){ std::cerr<<"\aNo se encontro el archivo: "<<archivo<<std::endl; ban = 0; return; }
+    if(diccionario.fail()){ std::cerr<<"\aNo se encontro el archivo: "<<archivo<<std::endl; return; }
 
     while(getline(diccionario,linea)){
+        
 
-        //linea[0] = tolower(linea[0]); // cambia el caracter a minus
+        if(!esPalabraValida(linea)) continue;
+
+        linea[0] = tolower(linea[0]); // cambia el caracter a minuscula
 
         std::reverse(linea.begin(),linea.end());
-        //linea[linea.size()-1] = tolower(linea[linea.size()-1]); // cambia el ultimo caracter a minuscula
 
-        switch(toupper(linea[0])){
+        switch(linea[0]){
 
-            case 'A': palabrasInv[0].push_back(linea);
+            case 'a': palabrasInv[0].push_back(linea);
                       break;
-            case 'B': palabrasInv[1].push_back(linea);
+            case 'b': palabrasInv[1].push_back(linea);
                       break;
-            case 'C': palabrasInv[2].push_back(linea);
+            case 'c': palabrasInv[2].push_back(linea);
                       break;
-            case 'D': palabrasInv[3].push_back(linea);
+            case 'd': palabrasInv[3].push_back(linea);
                       break;
-            case 'E': palabrasInv[4].push_back(linea);
+            case 'e': palabrasInv[4].push_back(linea);
                       break;
-            case 'F': palabrasInv[5].push_back(linea);
+            case 'f': palabrasInv[5].push_back(linea);
                       break;
-            case 'G': palabrasInv[6].push_back(linea);
+            case 'g': palabrasInv[6].push_back(linea);
                       break;
-            case 'H': palabrasInv[7].push_back(linea);
+            case 'h': palabrasInv[7].push_back(linea);
                       break;
-            case 'I': palabrasInv[8].push_back(linea);
+            case 'i': palabrasInv[8].push_back(linea);
                       break;
-            case 'J': palabrasInv[9].push_back(linea);
+            case 'j': palabrasInv[9].push_back(linea);
                       break;
-            case 'K': palabrasInv[10].push_back(linea);
+            case 'k': palabrasInv[10].push_back(linea);
                       break;
-            case 'L': palabrasInv[11].push_back(linea);
+            case 'l': palabrasInv[11].push_back(linea);
                       break;
-            case 'M': palabrasInv[12].push_back(linea);
+            case 'm': palabrasInv[12].push_back(linea);
                       break;
-            case 'N': palabrasInv[13].push_back(linea);
+            case 'n': palabrasInv[13].push_back(linea);
                       break;
-            case 'O': palabrasInv[14].push_back(linea);
+            case 'o': palabrasInv[14].push_back(linea);
                       break;
-            case 'P': palabrasInv[15].push_back(linea);
+            case 'p': palabrasInv[15].push_back(linea);
                       break;
-            case 'Q': palabrasInv[16].push_back(linea);
+            case 'q': palabrasInv[16].push_back(linea);
                       break;
-            case 'R': palabrasInv[17].push_back(linea);
+            case 'r': palabrasInv[17].push_back(linea);
                       break;
-            case 'S': palabrasInv[18].push_back(linea);
+            case 's': palabrasInv[18].push_back(linea);
                       break;
-            case 'T': palabrasInv[19].push_back(linea);
+            case 't': palabrasInv[19].push_back(linea);
                       break;
-            case 'U': palabrasInv[20].push_back(linea);
+            case 'u': palabrasInv[20].push_back(linea);
                       break;
-            case 'V': palabrasInv[21].push_back(linea);
+            case 'v': palabrasInv[21].push_back(linea);
                       break;
-            case 'W': palabrasInv[22].push_back(linea);
+            case 'w': palabrasInv[22].push_back(linea);
                       break;
-            case 'X': palabrasInv[23].push_back(linea);
+            case 'x': palabrasInv[23].push_back(linea);
                       break;
-            case 'Y': palabrasInv[24].push_back(linea);
+            case 'y': palabrasInv[24].push_back(linea);
                       break;
-            case 'Z': palabrasInv[25].push_back(linea);
+            case 'z': palabrasInv[25].push_back(linea);
                       break;
         }
     }
+    
     std::cout<<"palabras que comienzan por "<<c<<"\n";
-    for(std::string i:palabrasInv[c-'A'])
+    for(std::string i:palabrasInv[c-'a'])
         std::cout<<i<<std::endl;
 
     
@@ -350,42 +358,55 @@ void iniciarInv(const std::string& archivo,std::vector<std::vector<std::string>>
 
 void puntaje(const std::string& palabra,const std::vector<std::vector<std::string>>& palabras,const std::vector<std::vector<std::string>>& palabrasInv){
     unsigned int puntaje = 0;
+    bool ban = 1;
 
-    if(!esPalabraValida(palabra)){ std::cout<<"\nLa palabra contiene caracteres no validos\n\nResultado Fallido\n"; return;}
+    if(!esPalabraValida(palabra)){ std::cerr<<"\n\aLa palabra contiene caracteres no validos\n\nResultado Fallido\n"; return;}
     
-    if(!encuentraPalDiccionario(palabra,palabras[toupper(palabra[0]) - 'A'],palabrasInv[toupper(palabra[0]) - 'A'])){ 
-        std::cout<<"\a\nNo se encontro la palabra en tanto el diccionario orden normal, como orden inverso\n";
-        return;
+    if(!(banderas & 1 || banderas & 2)){std::cerr<<"\n\aAlguno de los vectores de palabras debe estar lleno\n"; return;}
+
+    if(encuentraDiccionario(palabra,palabras[tolower(palabra[0]) - 'a'])){
+        std::cout<<"\nLa palabra se encuentra en el diccionario normal\n";
+        ban = 0; 
+    }else std::cerr<<"\a\nNo se encontro la palabra en el diccionario normal\n";
+
+    if(encuentraDiccionarioInv(palabra,palabrasInv[tolower(palabra[0] - 'a')])){
+        std::cout<<"\nLa palabra se encuentra en el diccionario inverso\n";
+        ban = 0;
+    }else std::cerr<<"\n\aNo se encontro la palabra en el diccionario inverso\n";
+    
+    if(ban){
+        std::cout<<"\n\nLa palabra no se encuentra en ningun diccionario\n\n"; return;
     }
 
+
     for(int i=0; i<palabra.length(); i++)
-        switch(toupper(palabra[i])){
-            case 'E':
-            case 'A':
-            case 'I':
-            case 'O':
-            case 'N':
-            case 'R':
-            case 'T':
-            case 'L':
-            case 'S':
-            case 'U': puntaje++; break;
-            case 'D':
-            case 'G': puntaje += 2; break;
-            case 'B':
-            case 'C':
-            case 'M':
-            case 'P': puntaje += 3; break;
-            case 'F':
-            case 'H':
-            case 'V':
-            case 'W': 
-            case 'Y': puntaje += 4; break;
-            case 'K': puntaje += 5; break;
-            case 'J': 
-            case 'X': puntaje += 8; break;
-            case 'Q':
-            case 'Z': puntaje += 10;
+        switch(tolower(palabra[i])){
+            case 'e':
+            case 'a':
+            case 'i':
+            case 'o':
+            case 'n':
+            case 'r':
+            case 't':
+            case 'l':
+            case 's':
+            case 'u': puntaje++; break;
+            case 'd':
+            case 'g': puntaje += 2; break;
+            case 'b':
+            case 'c':
+            case 'm':
+            case 'p': puntaje += 3; break;
+            case 'f':
+            case 'h':
+            case 'v':
+            case 'w': 
+            case 'y': puntaje += 4; break;
+            case 'k': puntaje += 5; break;
+            case 'j': 
+            case 'x': puntaje += 8; break;
+            case 'q':
+            case 'z': puntaje += 10;
         }
 
     std::cout<<"\n\nLa palabra "<<palabra<<" tiene un puntaje de: "<<puntaje<<"\n\n";
@@ -402,7 +423,7 @@ void iniciarArbol(const std::string& archivo){
 
 
     
-    if(diccionario.fail()){ std::cerr<<"\aNo se encontro el archivo: "<<archivo<<std::endl; ban = 0; return; }
+    if(diccionario.fail()){ std::cerr<<"\aNo se encontro el archivo: "<<archivo<<std::endl; return; }
 
     if(ban){
     std::cout<<"\n\n\tEl arbol del diccionario se ha inicializado correctamente.\n\n";
@@ -424,7 +445,7 @@ void iniciarArbolInv(const std::string& archivo){
 
 
     
-    if(diccionario.fail()){ std::cerr<<"\aNo se encontro el archivo: "<<archivo<<std::endl; ban = 0; return; }
+    if(diccionario.fail()){ std::cerr<<"\aNo se encontro el archivo: "<<archivo<<std::endl; return;}
 
     if(ban){
     std::cout<<"\n\n\tEl arbol del diccionario inverso se ha inicializado correctamente.\n\n";
@@ -477,12 +498,16 @@ bool esPalabraValida(const std::string& palabra){
     return true;
 }
 
-bool encuentraPalDiccionario(const std::string& palabra,const std::vector<std::string>& vecPalabra,const std::vector<std::string>& vecPalabraInv){
-    bool ban = 0;
+bool encuentraDiccionario(const std::string& palabra,const std::vector<std::string>& vecPalabra){
 
-    for(std::string i:vecPalabra) if(i == palabra) ban = 1;
+    for(std::string i:vecPalabra) if(i == palabra) return true;
 
-    for(std::string i:vecPalabra) if(i == palabra && ban) return true;
+    return false;
+}
+
+bool encuentraDiccionarioInv(const std::string& palabra,const std::vector<std::string>& vecPalabraInv){
+
+    for(std::string i:vecPalabraInv) if(i == palabra) return true;
 
     return false;
 }
